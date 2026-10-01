@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
-import { useIsAdmin } from "@/components/Header";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — MediScan AI" }, { name: "description", content: "Manage profiles and cached medicines." }] }),
@@ -20,7 +19,6 @@ function AdminPage() {
       return !!data;
     },
   });
-  useIsAdmin(null);
 
   const { data } = useQuery({
     queryKey: ["admin-data"],
