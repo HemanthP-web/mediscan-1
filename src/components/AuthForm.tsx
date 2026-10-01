@@ -69,7 +69,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             {errors[f] && <p className="mt-1 text-xs text-warning">{errors[f]}</p>}
           </div>
         ))}
-        {errors.form && <p className="text-sm text-warning">{errors.form}</p>}
+        {errors['form'] && <p className="text-sm text-warning">{errors['form']}</p>}
         {msg && <p className="text-sm text-primary">{msg}</p>}
         <button className="btn-primary w-full" disabled={busy}>
           {busy ? t("loading") : mode === "login" ? t("login") : t("register")}
