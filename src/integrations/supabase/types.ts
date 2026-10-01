@@ -14,16 +14,187 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      medicine_lookups: {
+        Row: {
+          created_at: string
+          id: string
+          medicine_id: string
+          note: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          medicine_id: string
+          note?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          medicine_id?: string
+          note?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_lookups_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_lookups_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicines: {
+        Row: {
+          created_at: string
+          dosage_en: string
+          dosage_ta: string | null
+          id: string
+          name: string
+          name_ta: string | null
+          precautions_en: string
+          precautions_ta: string | null
+          side_effects_en: string
+          side_effects_ta: string | null
+          source: string
+          uses_en: string
+          uses_ta: string | null
+        }
+        Insert: {
+          created_at?: string
+          dosage_en: string
+          dosage_ta?: string | null
+          id?: string
+          name: string
+          name_ta?: string | null
+          precautions_en: string
+          precautions_ta?: string | null
+          side_effects_en: string
+          side_effects_ta?: string | null
+          source?: string
+          uses_en: string
+          uses_ta?: string | null
+        }
+        Update: {
+          created_at?: string
+          dosage_en?: string
+          dosage_ta?: string | null
+          id?: string
+          name?: string
+          name_ta?: string | null
+          precautions_en?: string
+          precautions_ta?: string | null
+          side_effects_en?: string
+          side_effects_ta?: string | null
+          source?: string
+          uses_en?: string
+          uses_ta?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          preferred_lang: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          name: string
+          preferred_lang?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          preferred_lang?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          content_en: string
+          content_ta: string | null
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content_en: string
+          content_ta?: string | null
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content_en?: string
+          content_ta?: string | null
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "patient" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +321,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["patient", "admin"],
+    },
   },
 } as const
